@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import { errorHandler } from "./middlewares";
 import authRoutes from "./modules/auth/routes";
 import textRoutes from "./modules/text/routes"; 
+import cors from "cors";
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ export class Server {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(errorHandler);
+    this.app.use(cors());
   }
 
   private setUpRoutes() {
