@@ -11,14 +11,8 @@ export const fileToText = async (file: Express.Multer.File) => {
       file.mimetype === "image/jpeg" ||
       file.mimetype === "image/jpg"
     ) {
-      console.log("image");
-      const start = Date.now();
       const worker = await createWorker('eng');
       const result = await worker.recognize(file.path);
-      const end = Date.now();
-      const durationMs = end - start;
-      const seconds = (durationMs / 1000).toFixed(2);
-      console.log(`Processing time: ${seconds} seconds`);
       return result.data.text.toString();
     } else if (file.mimetype === "application/pdf") {
       const dataBuffer = await fsPromises.readFile(file.path);

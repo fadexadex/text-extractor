@@ -15,7 +15,6 @@ export class TextController {
   getText = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const files = req.files as Express.Multer.File[];
-      console.log(files);
       let finalText: FileTextResponse[] = []
       for(let file of files){
         const text = await fileToText(file)
