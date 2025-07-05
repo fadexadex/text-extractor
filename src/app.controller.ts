@@ -43,7 +43,7 @@ export class Server {
       socket.on("disconnect", () => {
         console.log("User disconnected");
       });
-    });
+    }); 
   }
 
   private useSocket() {

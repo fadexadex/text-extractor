@@ -35,11 +35,11 @@ export const fileToText = async (file: Express.Multer.File, io?: SocketServer) =
       io.emit("file-extraction-complete", {
         filename: file.originalname,
         message: `Text extraction completed for ${file.originalname}`,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        extractedText
       });
     }
-
-    return extractedText;
+    
   } catch (error) {
     fs.unlinkSync(file.path);
     
