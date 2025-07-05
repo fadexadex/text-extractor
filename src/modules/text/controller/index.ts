@@ -1,10 +1,9 @@
-import { TextService } from "../service";
-import { Request, Response, NextFunction } from "express";
+import { Response, NextFunction } from "express";
 import { StatusCodes } from "http-status-codes";
 import { fileToText } from "../../../utils/fileToText";
 import fs from "fs";
+import { SocketRequest } from "utils/types";
 
-const textService = new TextService();
 
 interface FileTextResponse {
   fileName: string;
@@ -12,12 +11,12 @@ interface FileTextResponse {
 }
 
 export class TextController {
-  getText = async (req: Request, res: Response, next: NextFunction) => {
+  getText = async (req: SocketRequest, res: Response, next: NextFunction) => {
     try {
       const files = req.files as Express.Multer.File[];
       let finalText: FileTextResponse[] = []
       for(let file of files){
-        const text = await fileToText(file)
+        const text = await fileToText(file, req.io);
         fs.unlinkSync(file.path); 
         finalText.push({ fileName: file.originalname, text });
       }
